@@ -2,7 +2,7 @@ package instruction
 
 import "testing"
 
-func Test_assembleInstruction(t *testing.T) {
+func Test_Assemble(t *testing.T) {
 	tests := []struct {
 		inst    string
 		wantMc  uint32
@@ -51,7 +51,7 @@ func Test_assembleInstruction(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.inst, func(t *testing.T) {
-			got, err := assembleInstruction(tt.inst)
+			got, err := Assemble(tt.inst)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("assembleInstruction() error = %v, wantErr %v", err, tt.wantErr)
 				return

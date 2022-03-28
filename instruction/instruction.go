@@ -25,8 +25,8 @@ type instructionR struct {
 	funct    uint8
 }
 
-// assembleInstruction parses a complete instruction (less semicolon and loewrcase) such as add $t0, $t0, $t1, and returns it's machine code binary value.
-func assembleInstruction(istr string) (uint32, error) {
+// Assemble parses a complete instruction (less semicolon and loewrcase) such as add $t0, $t0, $t1, and returns it's machine code binary value.
+func Assemble(istr string) (uint32, error) {
 	// split the instruction into operator and opperands
 	inst := strings.SplitN(istr, " ", 2)
 

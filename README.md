@@ -32,6 +32,25 @@ Usage of dsdii-assembler:
         Output format (hex, vhdl-byte, vhdl-word). (default "hex")
 ```
 
+## Examples
+
+```shell
+$ dsdii-assembler 'add $s0, $s1, $t3' 
+022b8020
+```
+
+```shell
+$ dsdii-assembler .\test.asm -ofmt vhdl-byte -nop-buff 4
+signal instructions : mem_array := (
+        x"00", x"00", x"80", x"20",
+        x"00", x"00", x"00", x"00",
+        x"00", x"00", x"00", x"00",
+       ...
+        x"22", x"10", x"00", x"04",
+        others => x"00"
+);
+```
+
 ## Contributions
 
 Contributions are welcome via pull request, as well as discussions via issues. Please ensure that all contributions are appropriately documented and tested.

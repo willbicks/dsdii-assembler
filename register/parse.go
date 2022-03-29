@@ -14,6 +14,10 @@ func Parse(regName string) (uint8, error) {
 // parseMap returns the register number given a register name.
 // Uses a map lookup with the register map.
 func parseMap(regName string) (uint8, error) {
+	if len(regName) < 2 {
+		return 0, fmt.Errorf("invalid register %s", regName)
+	}
+
 	if regName[0] != '$' {
 		return 0, fmt.Errorf("invalid register %s, must start with $", regName)
 	}
@@ -30,6 +34,10 @@ func parseMap(regName string) (uint8, error) {
 // While not used by the public Parse function, it is left in place for benchmarking,
 // testing, and posterity purposes.
 func parseConditional(regName string) (uint8, error) {
+	if len(regName) < 2 {
+		return 0, fmt.Errorf("invalid register %s", regName)
+	}
+
 	if regName[0] != '$' {
 		return 0, fmt.Errorf("invalid register %s, must start with $", regName)
 	}

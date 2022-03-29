@@ -5,10 +5,13 @@ import (
 	"io"
 )
 
+// Hex output formatter generates an ASCII encoded file with hex representations
+// of each instruction, seperated by new lines
 type Hex struct {
 	dest io.Writer
 }
 
+// NewHex returns a Hex output formatter with specified destination
 func NewHex(dest io.Writer) Hex {
 	return Hex{
 		dest: dest,

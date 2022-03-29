@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
@@ -15,8 +14,9 @@ func main() {
 	inFileName := flag.String("i", "", "Input file containing assembly instrucitons.")
 	outFileName := flag.String("o", "stdout", "Output file to write machine code to.")
 	outFileFmt := flag.String("ofmt", "hex", "Output format (hex, vhdl-byte, vhdl-word).")
-	inst := flag.Arg(0)
+	nopBuff := flag.Uint("nop-buff", 0, "Optional number of nop instructions to include after each instruciton.")
 	flag.Parse()
+	inst := flag.Arg(0)
 
 	var dest *os.File
 	if *outFileName == "stdout" {
@@ -34,6 +34,7 @@ func main() {
 	case "hex":
 		out = output.NewHex(dest)
 	case "vhdl-byte":
+		out = output.NewVHDLByte(dest)
 	case "vhdl-word":
 	default:
 		log.Fatal("Invalid output format. Want one of: hex, vhdl-byte, vhdl-word.")
@@ -54,8 +55,21 @@ func main() {
 		}
 		inScan := bufio.NewScanner(inFile)
 
+		var mc uint32
+		var line uint64
 		for inScan.Scan() {
-			fmt.Println(inScan.Text())
+			line++
+			// assemble and write instruction
+			mc, err = instruction.Assemble(inScan.Text())
+			if err != nil {
+				log.Fatalf("error on line %d: %s", line, err)
+			}
+			out.WriteInstruction(mc)
+
+			// add nop buffer as configured
+			for i := uint(0); i <= *nopBuff; i++ {
+				out.WriteInstruction(0)
+			}
 		}
 
 		if err := inScan.Err(); err != nil {
@@ -64,6 +78,4 @@ func main() {
 	}
 
 	out.WriteEnd()
-
-	fmt.Println(*inFileName, *outFileName, *outFileFmt, inst)
 }

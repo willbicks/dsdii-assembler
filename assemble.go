@@ -67,7 +67,7 @@ func main() {
 			out.WriteInstruction(mc)
 
 			// add nop buffer as configured
-			for i := uint(0); i <= *nopBuff; i++ {
+			for i := uint(0); i < *nopBuff; i++ {
 				out.WriteInstruction(0)
 			}
 		}

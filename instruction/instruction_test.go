@@ -48,6 +48,16 @@ func Test_Assemble(t *testing.T) {
 			wantMc:  0xAD310004,
 			wantErr: false,
 		},
+		{
+			inst:    "nop",
+			wantMc:  0x00000000,
+			wantErr: false,
+		},
+		{
+			inst:    "clear $t0",
+			wantMc:  0x00004020,
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.inst, func(t *testing.T) {

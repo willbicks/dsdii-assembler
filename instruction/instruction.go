@@ -31,9 +31,20 @@ func Assemble(istr string) (uint32, error) {
 	inst := strings.SplitN(istr, " ", 2)
 
 	// split the opperands by comma and strip whitespace
-	opperands := strings.Split(inst[1], ",")
-	for i := range opperands {
-		opperands[i] = strings.TrimSpace(opperands[i])
+	var opperands []string
+	if len(inst) == 2 {
+		opperands = strings.Split(inst[1], ",")
+		for i := range opperands {
+			opperands[i] = strings.TrimSpace(opperands[i])
+		}
+	}
+
+	// parse and return pseudo instruction, if applicable
+	pseudo, err := parsePseudo(inst[0], opperands)
+	if pseudo == nil && err != nil {
+		return 0, err
+	} else if pseudo != nil {
+		return pseudo.toMachine(), nil
 	}
 
 	opcode, funct, err := parseOperator(inst[0])

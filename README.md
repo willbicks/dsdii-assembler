@@ -28,7 +28,7 @@ Usage of dsdii-assembler:
         Optional number of nop instructions to include after each instruciton.
   -o string
         Output file to write machine code to. (default "stdout")
-  -ofmt string
+  -out-fmt string
         Output format (hex, vhdl-byte, vhdl-word). (default "hex")
 ```
 
@@ -40,7 +40,7 @@ $ dsdii-assembler 'add $s0, $s1, $t3'
 ```
 
 ```shell
-$ dsdii-assembler .\test.asm -ofmt vhdl-byte -nop-buff 4
+$ dsdii-assembler .\test.asm -out-fmt vhdl-byte -nop-buff 4
 signal instructions : mem_array := (
         x"00", x"00", x"80", x"20",
         x"00", x"00", x"00", x"00",

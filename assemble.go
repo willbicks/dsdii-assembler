@@ -13,7 +13,7 @@ import (
 func main() {
 	inFileName := flag.String("i", "", "Input file containing assembly instrucitons.")
 	outFileName := flag.String("o", "stdout", "Output file to write machine code to.")
-	outFileFmt := flag.String("ofmt", "hex", "Output format (hex, vhdl-byte, vhdl-word).")
+	outFileFmt := flag.String("out-fmt", "hex", "Output format (hex, vhdl-byte, vhdl-word).")
 	nopBuff := flag.Uint("nop-buff", 0, "Optional number of nop instructions to include after each instruciton.")
 	flag.Parse()
 	inst := flag.Arg(0)

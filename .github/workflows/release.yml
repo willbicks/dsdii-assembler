@@ -16,6 +16,9 @@ jobs:
         include:
           - goos: windows
             ext: .exe
+        exclude:
+          - goos: darwin
+            goarch: "386"
     
     steps:
     - uses: actions/checkout@v3

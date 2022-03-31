@@ -14,7 +14,12 @@ jobs:
         goos: [linux, windows, darwin]
         goarch: ["386", amd64, arm64]
         include:
+          - goos: darwin
+            osname: macos
+          - goos: linux
+            osname: linux
           - goos: windows
+            osname: windows
             ext: .exe
         exclude:
           - goos: darwin
@@ -41,9 +46,9 @@ jobs:
       env:
         GOOS: ${{ matrix.goos }}
         GOARCH: ${{ matrix.goarch }}
-      run: go build -o ./dsdii-assembler-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }} .
+      run: go build -o ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }} .
 
     - name: Upload Release Binary
       uses: softprops/action-gh-release@v1
       with:
-        files: dsdii-assembler-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.ext }}
+        files: dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }}

@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/willbicks/dsdii-assembler/instruction"
 	"github.com/willbicks/dsdii-assembler/output"
@@ -22,11 +24,19 @@ func main() {
 	if *outFileName == "stdout" {
 		dest = os.Stdout
 	} else {
-		dest, err := os.Create(*outFileName)
+		var err error
+		dest, err = os.Create(*outFileName)
 		if err != nil {
 			log.Panicf("unable to open output file: %s", err)
 		}
-		defer dest.Close()
+		defer func() {
+			if err := dest.Sync(); err != nil {
+				fmt.Println(err)
+			}
+			if err := dest.Close(); err != nil {
+				fmt.Println(err)
+			}
+		}()
 	}
 
 	var out output.Writer
@@ -41,6 +51,9 @@ func main() {
 	}
 
 	out.WriteStart()
+	if err := out.WriteStart(); err != nil {
+		log.Fatalf("writing start: %v", err)
+	}
 
 	if *inFileName == "" {
 		mc, err := instruction.Assemble(inst)
@@ -56,7 +69,6 @@ func main() {
 		inScan := bufio.NewScanner(inFile)
 
 		var mc uint32
-		var line uint64
 		for inScan.Scan() {
 			line++
 			// assemble and write instruction
@@ -64,18 +76,25 @@ func main() {
 			if err != nil {
 				log.Fatalf("error on line %d: %s", line, err)
 			}
-			out.WriteInstruction(mc)
+			if err := out.WriteInstruction(mc); err != nil {
+				log.Fatalf("writing instruction: %v", err)
+			}
 
 			// add nop buffer as configured
 			for i := uint(0); i < *nopBuff; i++ {
-				out.WriteInstruction(0)
+				if err := out.WriteInstruction(0); err != nil {
+					log.Fatalf("writing nop: %v", err)
+				}
 			}
 		}
 
 		if err := inScan.Err(); err != nil {
-			log.Fatal(err)
+			log.Fatalf("scan error: %v", err)
 		}
 	}
 
+	if err := out.WriteEnd(); err != nil {
+		log.Fatalf("writing end: %v", err)
+	}
 	out.WriteEnd()
 }

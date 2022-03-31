@@ -50,12 +50,15 @@ func main() {
 		log.Fatal("Invalid output format. Want one of: hex, vhdl-byte, vhdl-word.")
 	}
 
-	out.WriteStart()
+	start := time.Now()
 	if err := out.WriteStart(); err != nil {
 		log.Fatalf("writing start: %v", err)
 	}
+	var line uint64
+	fmt.Println("dsdii-assembler")
 
 	if *inFileName == "" {
+		line = 1
 		mc, err := instruction.Assemble(inst)
 		if err != nil {
 			log.Fatalf("parsing instruction argument: %s", err)
@@ -96,5 +99,7 @@ func main() {
 	if err := out.WriteEnd(); err != nil {
 		log.Fatalf("writing end: %v", err)
 	}
-	out.WriteEnd()
+
+	fmt.Printf("asssembled %d line(s) in %d ms\n", line, time.Now().Sub(start).Milliseconds())
+	return
 }

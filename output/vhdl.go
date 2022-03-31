@@ -34,6 +34,6 @@ func (o VHDLByte) WriteInstruction(inst uint32) error {
 }
 
 func (o VHDLByte) WriteEnd() error {
-	_, err := fmt.Fprint(o.dest, "\tothers => x\"00\"\n);")
+	_, err := fmt.Fprint(o.dest, "\tothers => x\"00\"\n);\n")
 	return err
 }

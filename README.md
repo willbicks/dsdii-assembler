@@ -36,19 +36,31 @@ Usage of dsdii-assembler:
 
 ```shell
 $ dsdii-assembler 'add $s0, $s1, $t3' 
+dsdii-assembler
 022b8020
+asssembled 1 line(s) in 0 ms
 ```
 
 ```shell
 $ dsdii-assembler .\test.asm -out-fmt vhdl-byte -nop-buff 4
+dsdii-assembler
 signal instructions : mem_array := (
-        x"00", x"00", x"80", x"20",
-        x"00", x"00", x"00", x"00",
-        x"00", x"00", x"00", x"00",
-       ...
-        x"22", x"10", x"00", x"04",
-        others => x"00"
+      x"20", x"10", x"00", x"1f",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"20", x"11", x"00", x"03",
+      ...
+      x"00", x"00", x"00", x"00",
+      x"8e", x"55", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00",
+      others => x"00"
 );
+asssembled 35 line(s) in 21 ms
 ```
 
 ## Contributions

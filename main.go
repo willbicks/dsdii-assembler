@@ -69,7 +69,6 @@ func generateConfig() (c config, closer func(), err error) {
 }
 
 func main() {
-	start := time.Now()
 	fmt.Println("dsdii-assembler")
 
 	config, close, err := generateConfig()
@@ -78,6 +77,8 @@ func main() {
 		return
 	}
 	defer close()
+
+	start := time.Now()
 
 	lines, err := assemble(config)
 	if err != nil {

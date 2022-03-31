@@ -58,11 +58,6 @@ func Test_Assemble(t *testing.T) {
 			wantMc:  0x00004020,
 			wantErr: false,
 		},
-		{
-			inst:    "move $s0, $t0",
-			wantMc:  0x00004020,
-			wantErr: false,
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.inst, func(t *testing.T) {

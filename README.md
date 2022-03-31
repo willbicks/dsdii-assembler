@@ -4,14 +4,14 @@ DSDII Assembler parses MIPS instructions and generates machine code in various f
 
 ## Features
 
-#### Instruction Parsing:
+### Instruction Parsing:
 - [x] R type instructions
 - [x] I type instructions
 - [ ] J type instructions (not implemented in our processor)
 - [x] Pseudo instructions (`nop`, `clear`, `move`)
 - [ ] Load immediate (pseudo `li`)
 - [ ] Support for comments and blank lines
-#### Output Formatting:
+### Output Formatting:
 - [x] Raw hex machine code output
 - [x] VHDL code generation (byte addressable memory)
 - [ ] VHDL code generation (word addressable memory)
@@ -31,6 +31,24 @@ Usage of dsdii-assembler:
   -out-fmt string
         Output format (hex, vhdl-byte, vhdl-word). (default "hex")
 ```
+
+## Installation
+
+
+### Without Go Installed:
+
+If you don't have Go installed on your computer, pre-compiled binaries for Windows, macOS, and Linux can be downloaded from the [releases section](/releases).
+
+Download the appropriate binary for your system, and name `dsdii-assembler` before adding it your path or using it in-situ.
+### With Go Installed:
+
+If you have the Go language tools installed on your computer, downloading and installing dsdii-assembler is as simple as:
+
+```shell
+$ go install github.com/willbicks/dsdii-assembler@latest
+```
+
+This will download, compile, and install the binary in your Go path.
 
 ## Examples
 

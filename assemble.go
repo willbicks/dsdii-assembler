@@ -4,15 +4,28 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"regexp"
+	"strings"
 
 	"github.com/willbicks/dsdii-assembler/instruction"
 	"github.com/willbicks/dsdii-assembler/output"
 )
 
+// commentRegex matches comments so they can be stripped from the input.
+var commentRegex *regexp.Regexp
+
 type config struct {
 	in      io.Reader     // input reader
 	out     output.Writer // output writer
 	nopBuff uint          // number of nop instructions to include after each instruction
+}
+
+// stripComment removes any comments from the provided string, and returns a string containing only the instruction.
+func stripComment(s string) string {
+	if commentRegex == nil {
+		commentRegex = regexp.MustCompile(`#.*?$`)
+	}
+	return strings.TrimSpace(commentRegex.ReplaceAllString(s, ""))
 }
 
 // assemble a series of instructions using the provided configuration, and return the number of lines assembled, and an error if one occured.
@@ -27,12 +40,19 @@ func assemble(c config) (lines uint64, err error) {
 	for inScan.Scan() {
 		line++
 
+		// strip comments and whitespace and skip parsing if result is empty
+		instWComment := strings.TrimSpace(inScan.Text())
+		instString := stripComment(instWComment)
+		if instString == "" {
+			continue
+		}
+
 		// assemble and write instruction
-		mc, err = instruction.Assemble(inScan.Text())
+		mc, err = instruction.Assemble(instString)
 		if err != nil {
 			return 0, fmt.Errorf("on line %d: %s", line, err)
 		}
-		if err := c.out.WriteInstruction(mc, inScan.Text()); err != nil {
+		if err := c.out.WriteInstruction(mc, instWComment); err != nil {
 			return 0, fmt.Errorf("writing instruction: %v", err)
 		}
 

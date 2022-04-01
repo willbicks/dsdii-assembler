@@ -10,11 +10,12 @@ DSDII Assembler parses MIPS instructions and generates machine code in various f
 - [ ] J type instructions (not implemented in our processor)
 - [x] Pseudo instructions (`nop`, `clear`, `move`)
 - [ ] Load immediate (pseudo `li`)
-- [ ] Support for comments and blank lines
-### Output Formatting:
+- [x] Support for comments and blank lines
+### Code Generation:
 - [x] Raw hex machine code output
 - [x] VHDL code generation (byte addressable memory)
 - [ ] VHDL code generation (word addressable memory)
+- [x] Generate VHDL comments with assembly instructions
 
 ## Usage
 
@@ -61,22 +62,21 @@ asssembled 1 line(s) in 0 ms
 ```
 
 ```shell
-$ dsdii-assembler -i .\test.asm -out-fmt vhdl-byte -nop-buff 4
+$ dsdii-assembler -i .\test.asm -out-fmt vhdl-byte
 dsdii-assembler
 signal instructions : mem_array := (
-      x"20", x"10", x"00", x"1f",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"20", x"11", x"00", x"03",
+      x"00", x"00", x"00", x"00", -- nop
+      x"00", x"00", x"00", x"00", -- nop
+      x"00", x"00", x"00", x"00", -- nop
+      x"00", x"00", x"00", x"00", -- nop
+      x"20", x"10", x"00", x"1f", -- addi $s0, $0, 31 # assembly comments included in VHDL
+      x"20", x"11", x"00", x"03", -- addi $s1, $0, 3
+      x"20", x"12", x"00", x"04", -- addi $s2, $0, 4 
       ...
-      x"00", x"00", x"00", x"00",
-      x"8e", x"55", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
-      x"00", x"00", x"00", x"00",
+      x"00", x"00", x"00", x"00", -- nop
+      x"02", x"11", x"40", x"20", -- add $t0, $s0, $s1
+      x"02", x"11", x"48", x"24", -- and $t1, $s0, $s1
+      x"02", x"11", x"50", x"19", -- multu $t2, $s0, $s1
       others => x"00"
 );
 asssembled 35 line(s) in 21 ms

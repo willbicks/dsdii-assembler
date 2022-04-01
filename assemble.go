@@ -10,9 +10,9 @@ import (
 )
 
 type config struct {
-	in      io.Reader
-	out     output.Writer
-	nopBuff uint
+	in      io.Reader     // input reader
+	out     output.Writer // output writer
+	nopBuff uint          // number of nop instructions to include after each instruction
 }
 
 // assemble a series of instructions using the provided configuration, and return the number of lines assembled, and an error if one occured.

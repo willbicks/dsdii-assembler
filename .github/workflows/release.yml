@@ -50,11 +50,11 @@ jobs:
 
     - name: Create Tarball
       if: matrix.goos == 'linux'
-      run: tar cvzf ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.tar.gz ./dsdii-assembler${{ matrix.exeext }}
+      run: tar cvzf ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.tar.gz ./dsdii-assembler${{ matrix.exeext }} ./README.md
 
     - name: Create Zip
       if: matrix.goos == 'windows' || matrix.goos == 'darwin'
-      run: zip ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.zip ./dsdii-assembler${{ matrix.exeext }}
+      run: zip ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.zip ./dsdii-assembler${{ matrix.exeext }} ./README.md
 
     - name: Upload Release Binary
       uses: softprops/action-gh-release@v1

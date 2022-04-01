@@ -1,0 +1,8 @@
+# IDE files
+.vscode
+
+# input files
+*.asm
+
+# built files
+*.exe

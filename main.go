@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -11,39 +10,38 @@ import (
 	"github.com/willbicks/dsdii-assembler/output"
 )
 
-// generateConfig parses command flags and arguments, and generates a config struct with the input source, output destination, and additoinal parameters.
+// generateConfig generates a config struct with the input source, output destination, and additional parameters from
+// provided flag set.
 //
-// returns the generate config, a closer function to close the output destination, and any errors encountered while parsing the configuration.
-func generateConfig() (c config, closer func(), err error) {
-	var cfg config
+// returns the generate config, a closer function to close the output destination, and any errors encountered while
+// parsing the configuration.
+func generateConfig(f flags) (c config, closer func(), err error) {
+	cfg := config{
+		nopBuff: f.nopBuff,
+	}
 
-	inFileName := flag.String("i", "", "Input file containing assembly instrucitons.")
-	outFileName := flag.String("o", "stdout", "Output file to write machine code to.")
-	outFileFmt := flag.String("out-fmt", "hex", "Output format (hex, vhdl-byte, vhdl-word).")
-	flag.UintVar(&cfg.nopBuff, "nop-buff", 0, "Optional number of nop instructions to include after each instruciton.")
-	flag.Parse()
-	inst := flag.Arg(0)
-
-	if *inFileName == "" {
-		if len(inst) != 0 {
-			cfg.in = strings.NewReader(inst)
+	// set cfg.in (input reader)
+	if f.inFile == "" {
+		if len(f.instruction) != 0 {
+			cfg.in = strings.NewReader(f.instruction)
 		} else {
-			return config{}, func() {}, fmt.Errorf("neither an input file nor a singular instruction to assemble were provided")
+			return config{}, func() {}, fmt.Errorf("neither an input file nor a singular instruction to assemble were provided. Need help? Try `dsdii-assembler -help`")
 		}
 	} else {
 		var err error
-		cfg.in, err = os.Open(*inFileName)
+		cfg.in, err = os.Open(f.inFile)
 		if err != nil {
 			return config{}, func() {}, fmt.Errorf("opening input file: %s", err)
 		}
 	}
 
+	// set cfg.out (output writer)
 	var dest *os.File
-	if *outFileName == "stdout" {
+	if f.outFile == "stdout" {
 		dest = os.Stdout
 	} else {
 		var err error
-		dest, err = os.Create(*outFileName)
+		dest, err = os.Create(f.outFile)
 		if err != nil {
 			return config{}, func() {}, fmt.Errorf("unable to open output file: %s", err)
 		}
@@ -55,7 +53,7 @@ func generateConfig() (c config, closer func(), err error) {
 		}
 	}
 
-	switch *outFileFmt {
+	switch f.outFmt {
 	case "hex":
 		cfg.out = output.NewHex(dest)
 	case "vhdl-byte":
@@ -69,15 +67,16 @@ func generateConfig() (c config, closer func(), err error) {
 }
 
 func main() {
-	fmt.Println("dsdii-assembler")
+	flags := parseFlags()
 
-	config, close, err := generateConfig()
+	config, close, err := generateConfig(flags)
 	if err != nil {
 		fmt.Printf("\033[31mERROR:\033[0m %s", err)
 		return
 	}
 	defer close()
 
+	fmt.Println("dsdii-assembler")
 	start := time.Now()
 
 	lines, err := assemble(config)

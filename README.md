@@ -19,11 +19,13 @@ DSDII Assembler parses MIPS instructions and generates machine code in various f
 ## Usage
 
 ```shell
-$ dsdii-assembler --help
-
+$ dsdii-assembler -help
 Usage of dsdii-assembler:
+        dsdii-assembler [options...] [<instruction>]
+
+Options:
   -i string
-        Input file containing assembly instrucitons.
+        Input file containing assembly instrucitons. If not set, the instruction parameter should contain the singular instruciton to be assembled.
   -nop-buff uint
         Optional number of nop instructions to include after each instruciton.
   -o string
@@ -34,12 +36,11 @@ Usage of dsdii-assembler:
 
 ## Installation
 
-
 ### Without Go Installed:
 
 If you don't have Go installed on your computer, pre-compiled binaries for Windows, macOS, and Linux can be downloaded from the [releases section](/releases).
 
-Download the appropriate binary for your system, and name `dsdii-assembler` before adding it your path or using it in-situ.
+Download the appropriate binary for your system, and name it `dsdii-assembler` before adding it your path or using it in-situ.
 ### With Go Installed:
 
 If you have the Go language tools installed on your computer, downloading and installing dsdii-assembler is as simple as:
@@ -60,7 +61,7 @@ asssembled 1 line(s) in 0 ms
 ```
 
 ```shell
-$ dsdii-assembler .\test.asm -out-fmt vhdl-byte -nop-buff 4
+$ dsdii-assembler -i .\test.asm -out-fmt vhdl-byte -nop-buff 4
 dsdii-assembler
 signal instructions : mem_array := (
       x"20", x"10", x"00", x"1f",

@@ -20,11 +20,11 @@ func NewHex(dest io.Writer) Hex {
 
 var _ Writer = Hex{}
 
-func (o Hex) WriteStart() error {
+func (o Hex) WriteStart(comment string) error {
 	return nil
 }
 
-func (o Hex) WriteInstruction(inst uint32) error {
+func (o Hex) WriteInstruction(inst uint32, comment string) error {
 	_, err := fmt.Fprintf(o.dest, "%08x\n", inst)
 	return err
 }

@@ -2,7 +2,7 @@
 package output
 
 type Writer interface {
-	WriteStart() error
-	WriteInstruction(inst uint32) error
+	WriteStart(comment string) error
+	WriteInstruction(inst uint32, comment string) error
 	WriteEnd() error
 }

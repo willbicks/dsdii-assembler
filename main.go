@@ -67,6 +67,7 @@ func generateConfig(f flags) (c config, closer func(), err error) {
 }
 
 func main() {
+	parseVersionInfo()
 	flags := parseFlags()
 
 	config, close, err := generateConfig(flags)
@@ -76,7 +77,7 @@ func main() {
 	}
 	defer close()
 
-	fmt.Println("dsdii-assembler")
+	fmt.Printf("dsdii-assembler %v\n", version)
 	start := time.Now()
 
 	lines, err := assemble(config)

@@ -46,7 +46,7 @@ jobs:
       env:
         GOOS: ${{ matrix.goos }}
         GOARCH: ${{ matrix.goarch }}
-      run: go build -o ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }} .
+      run: go build -v -ldflags="-X 'main.version=${{github.ref_name}}' -X 'main.vcsHash=${{github.sha}}'" -o ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }} .
 
     - name: Upload Release Binary
       uses: softprops/action-gh-release@v1

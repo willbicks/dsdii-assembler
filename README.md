@@ -39,9 +39,9 @@ Options:
 
 ### Without Go Installed:
 
-If you don't have Go installed on your computer, pre-compiled binaries for Windows, macOS, and Linux can be downloaded from the [releases section](/releases).
+If you don't have Go installed on your computer, pre-compiled binaries for Windows, macOS, and Linux can be downloaded from the [releases section](https://github.com/willbicks/dsdii-assembler/releases).
 
-Download the appropriate binary for your system, and name it `dsdii-assembler` before adding it your path or using it in-situ.
+Download the appropriate binary for your system, extract it, and add it your path or using it in-situ.
 ### With Go Installed:
 
 If you have the Go language tools installed on your computer, downloading and installing dsdii-assembler is as simple as:
@@ -79,7 +79,7 @@ signal instructions : mem_array := (
       x"02", x"11", x"50", x"19", -- multu $t2, $s0, $s1
       others => x"00"
 );
-asssembled 35 line(s) in 21 ms
+asssembled 37 line(s) in 9 ms
 ```
 
 ## Contributions

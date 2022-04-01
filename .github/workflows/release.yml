@@ -20,7 +20,7 @@ jobs:
             osname: linux
           - goos: windows
             osname: windows
-            ext: .exe
+            exeext: .exe
         exclude:
           - goos: darwin
             goarch: "386"
@@ -46,9 +46,17 @@ jobs:
       env:
         GOOS: ${{ matrix.goos }}
         GOARCH: ${{ matrix.goarch }}
-      run: go build -v -ldflags="-X 'main.version=${{github.ref_name}}' -X 'main.vcsHash=${{github.sha}}'" -o ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }} .
+      run: go build -v -ldflags="-X 'main.version=${{github.ref_name}}' -X 'main.vcsHash=${{github.sha}}'" -o ./dsdii-assembler${{ matrix.exeext }} .
+
+    - name: Create Tarball
+      if: matrix.goos == 'linux'
+      run: tar cvzf ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.tar.gz ./dsdii-assembler${{ matrix.exeext }}
+
+    - name: Create Zip
+      if: matrix.goos == 'windows' || matrix.goos == 'darwin'
+      run: zip ./dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.zip ./dsdii-assembler${{ matrix.exeext }}
 
     - name: Upload Release Binary
       uses: softprops/action-gh-release@v1
       with:
-        files: dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}${{ matrix.ext }}
+        files: dsdii-assembler-${{ matrix.osname }}-${{ matrix.goarch }}.*

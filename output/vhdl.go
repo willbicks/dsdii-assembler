@@ -20,11 +20,14 @@ func NewVHDLByte(dest io.Writer) VHDLByte {
 
 var _ Writer = VHDLByte{}
 
+// WriteStart writes the VHDL array opener
 func (o VHDLByte) WriteStart(comment string) error {
 	_, err := fmt.Fprintf(o.dest, "-- %s\nsignal instructions : mem_array := (\n", comment)
 	return err
 }
 
+// WriteInstruction writes instruction to destination as 4 two character hex strings with VHDL quotes and commas,
+// and a VHDL comment containing the comment parameter
 func (o VHDLByte) WriteInstruction(inst uint32, comment string) error {
 	bs := make([]byte, 4)
 	binary.BigEndian.PutUint32(bs, inst)
@@ -33,6 +36,7 @@ func (o VHDLByte) WriteInstruction(inst uint32, comment string) error {
 	return err
 }
 
+// WriteEnd writes the VHDL array closer
 func (o VHDLByte) WriteEnd() error {
 	_, err := fmt.Fprint(o.dest, "\tothers => x\"00\"\n);\n")
 	return err

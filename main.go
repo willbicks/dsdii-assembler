@@ -59,6 +59,7 @@ func generateConfig(f flags) (c config, closer func(), err error) {
 	case "vhdl-byte":
 		cfg.out = output.NewVHDLByte(dest)
 	case "vhdl-word":
+		cfg.out = output.NewVHDLWord(dest)
 	default:
 		log.Fatal("Invalid output format. Want one of: hex, vhdl-byte, vhdl-word.")
 	}

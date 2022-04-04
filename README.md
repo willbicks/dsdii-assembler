@@ -14,7 +14,7 @@ DSDII Assembler parses MIPS instructions and generates machine code in various f
 ### Code Generation:
 - [x] Raw hex machine code output
 - [x] VHDL code generation (byte addressable memory)
-- [ ] VHDL code generation (word addressable memory)
+- [x] VHDL code generation (word addressable memory)
 - [x] Generate VHDL comments with assembly instructions
 
 ## Usage
@@ -41,7 +41,7 @@ Options:
 
 If you don't have Go installed on your computer, pre-compiled binaries for Windows, macOS, and Linux can be downloaded from the [releases section](https://github.com/willbicks/dsdii-assembler/releases).
 
-Download the appropriate binary for your system, extract it, and add it your path or using it in-situ.
+Download the appropriate binary for your system, extract it, and add it your path or use it in-situ.
 ### With Go Installed:
 
 If you have the Go language tools installed on your computer, downloading and installing dsdii-assembler is as simple as:

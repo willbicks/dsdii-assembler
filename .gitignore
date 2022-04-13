@@ -4,5 +4,6 @@
 # input files
 *.asm
 
-# built files
+# built / generated files
 *.exe
+*.out

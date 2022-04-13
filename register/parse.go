@@ -67,10 +67,10 @@ func parseConditional(regName string) (uint8, error) {
 	}
 
 	// return general purpose registers
-	errInvalidRegNum := fmt.Errorf("invalid register number %s", regName)
+	errInvalidReg := fmt.Errorf("invalid register %s", regName)
 	num64, err := strconv.ParseUint(string(regName[2]), 10, 8)
 	if err != nil {
-		return 0, errInvalidRegNum
+		return 0, errInvalidReg
 	}
 	num := uint8(num64)
 
@@ -79,13 +79,13 @@ func parseConditional(regName string) (uint8, error) {
 		if num <= 1 {
 			return num + 2, nil
 		} else {
-			return 0, errInvalidRegNum
+			return 0, errInvalidReg
 		}
 	case 'a':
 		if num <= 3 {
 			return num + 4, nil
 		} else {
-			return 0, errInvalidRegNum
+			return 0, errInvalidReg
 		}
 	case 't':
 		if num <= 7 {
@@ -93,19 +93,19 @@ func parseConditional(regName string) (uint8, error) {
 		} else if num <= 9 {
 			return num + (24 - 8), nil
 		} else {
-			return 0, errInvalidRegNum
+			return 0, errInvalidReg
 		}
 	case 's':
 		if num <= 7 {
 			return num + 16, nil
 		} else {
-			return 0, errInvalidRegNum
+			return 0, errInvalidReg
 		}
 	case 'k':
 		if num <= 1 {
 			return num + 26, nil
 		} else {
-			return 0, errInvalidRegNum
+			return 0, errInvalidReg
 		}
 	}
 

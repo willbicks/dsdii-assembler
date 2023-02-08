@@ -5,13 +5,14 @@ import (
 	"runtime/debug"
 )
 
+// These variables are set by the linker at build time.
 var (
 	version string // program version string
 	vcsHash string // git commit hash
 )
 
 // parseVersionInfo overwrites the package variables with embedded build info, if variables
-// are not allready set by linker flags.
+// are not already set by linker flags.
 func parseVersionInfo() {
 	dbg, ok := debug.ReadBuildInfo()
 	if !ok {

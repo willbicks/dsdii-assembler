@@ -26,15 +26,17 @@ func printUsage() {
 }
 
 // parseFlags parses the command line flags and returns a flags struct.
+//
+// If the first argument is "version", the version is printed and the program
+// exits with status 0.
 func parseFlags() flags {
 	var f flags
 
 	flag.Usage = printUsage
 
-	flag.StringVar(&f.inFile, "i", "", "Input file containing assembly instrucitons. If not set, the instruction parameter should contain the singular instruciton to be assembled.")
+	flag.StringVar(&f.inFile, "i", "", "Input file containing assembly instructions. If not set, the instruction parameter should contain the singular instruction to be assembled.")
 	flag.StringVar(&f.outFile, "o", "stdout", "Output file to write machine code to.")
-	flag.StringVar(&f.outFmt, "out-fmt", "hex", "Output format (hex, vhdl-byte, vhdl-word).")
-	flag.UintVar(&f.nopBuff, "nop-buff", 0, "Optional number of nop instructions to include after each instruciton.")
+	flag.UintVar(&f.nopBuff, "nop-buff", 0, "Optional number of nop instructions to include after each instruction.")
 
 	flag.Parse()
 

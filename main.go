@@ -25,7 +25,7 @@ func generateConfig(f flags) (c config, closer func(), err error) {
 		if len(f.instruction) != 0 {
 			cfg.in = strings.NewReader(f.instruction)
 		} else {
-			return config{}, func() {}, fmt.Errorf("neither an input file nor a singular instruction to assemble were provided. Need help? Try `dsdii-assembler -help`")
+			return config{}, func() {}, fmt.Errorf("Neither an input file nor a singular instruction to assemble were provided. Need help? Try `dsdii-assembler -help`.")
 		}
 	} else {
 		var err error
@@ -87,5 +87,5 @@ func main() {
 		return
 	}
 
-	fmt.Printf("asssembled %d line(s) in %d ms\n", lines, time.Now().Sub(start).Milliseconds())
+	fmt.Printf("assembled %d line(s) in %d ms\n", lines, time.Since(start).Milliseconds())
 }

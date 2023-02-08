@@ -6,12 +6,12 @@ import (
 	"io"
 )
 
-// VHDLByte output formatter generates VHDL code for a byte atressable memory array
+// VHDLByte output formatter generates VHDL code for a byte addressable memory array
 type VHDLByte struct {
 	dest io.Writer
 }
 
-// NewVHDLByte createas a new VHDLByte output formatter
+// NewVHDLByte creates a new VHDLByte output formatter
 func NewVHDLByte(dest io.Writer) VHDLByte {
 	return VHDLByte{
 		dest: dest,
@@ -36,13 +36,13 @@ func (o VHDLByte) WriteInstruction(inst uint32, comment string) error {
 	return err
 }
 
-// WriteEnd writes the VHDL array closer for byte adressable memory
+// WriteEnd writes the VHDL array closer for byte addressable memory
 func (o VHDLByte) WriteEnd() error {
 	_, err := fmt.Fprint(o.dest, "\tothers => x\"00\"\n);\n")
 	return err
 }
 
-// VHDLWord output formatter generates VHDL code for a word adressable atressable memory array
+// VHDLWord output formatter generates VHDL code for a word addressable memory array
 type VHDLWord struct {
 	dest io.Writer
 }

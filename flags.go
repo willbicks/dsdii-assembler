@@ -36,6 +36,7 @@ func parseFlags() flags {
 
 	flag.StringVar(&f.inFile, "i", "", "Input file containing assembly instructions. If not set, the instruction parameter should contain the singular instruction to be assembled.")
 	flag.StringVar(&f.outFile, "o", "stdout", "Output file to write machine code to.")
+	flag.StringVar(&f.outFmt, "out-fmt", "hex", "Output format (hex, vhdl-byte, vhdl-word, binary, binary-nibble, binary-byte).")
 	flag.UintVar(&f.nopBuff, "nop-buff", 0, "Optional number of nop instructions to include after each instruction.")
 
 	flag.Parse()

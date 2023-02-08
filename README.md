@@ -36,7 +36,7 @@ Options:
   -o string
         Output file to write machine code to. (default "stdout")
   -out-fmt string
-        Output format (hex, vhdl-byte, vhdl-word). (default "hex")
+        Output format (hex, vhdl-byte, vhdl-word, binary, binary-nibble, binary-byte). (default "hex")
 ```
 
 ## Installation

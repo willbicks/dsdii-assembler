@@ -60,8 +60,14 @@ func generateConfig(f flags) (c config, closer func(), err error) {
 		cfg.out = output.NewVHDLByte(dest)
 	case "vhdl-word":
 		cfg.out = output.NewVHDLWord(dest)
+	case "binary":
+		cfg.out = output.NewBinary(dest, 0)
+	case "binary-nibble":
+		cfg.out = output.NewBinary(dest, 4)
+	case "binary-byte":
+		cfg.out = output.NewBinary(dest, 8)
 	default:
-		log.Fatal("Invalid output format. Want one of: hex, vhdl-byte, vhdl-word.")
+		log.Fatal("Invalid output format. Want one of: hex, vhdl-byte, vhdl-word, binary, binary-nibble, binary-byte.")
 	}
 
 	return cfg, close, nil

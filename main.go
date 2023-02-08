@@ -80,6 +80,7 @@ func main() {
 	config, close, err := generateConfig(flags)
 	if err != nil {
 		fmt.Printf("\033[31mERROR:\033[0m %s", err)
+		os.Exit(1)
 		return
 	}
 	defer close()
@@ -90,6 +91,7 @@ func main() {
 	lines, err := assemble(config)
 	if err != nil {
 		fmt.Printf("\033[31mERROR:\033[0m %s", err)
+		os.Exit(2)
 		return
 	}
 

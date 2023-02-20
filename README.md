@@ -16,6 +16,7 @@ DSDII Assembler parses MIPS instructions and generates machine code in various f
 ### Code Generation:
 
 - [x] Raw hex machine code output
+- [x] Binary machine code output (with optional nibble or byte separators)
 - [x] VHDL code generation (byte addressable memory)
 - [x] VHDL code generation (word addressable memory)
 - [x] Generate VHDL comments with assembly instructions

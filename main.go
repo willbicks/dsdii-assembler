@@ -85,7 +85,10 @@ func main() {
 	}
 	defer close()
 
-	fmt.Printf("dsdii-assembler %v\n", version)
+	if !flags.quiet {
+		fmt.Printf("dsdii-assembler %v\n", version)
+	}
+
 	start := time.Now()
 
 	lines, err := assemble(config)
@@ -95,5 +98,7 @@ func main() {
 		return
 	}
 
-	fmt.Printf("assembled %d line(s) in %d ms\n", lines, time.Since(start).Milliseconds())
+	if !flags.quiet {
+		fmt.Printf("assembled %d line(s) in %d ms\n", lines, time.Since(start).Milliseconds())
+	}
 }

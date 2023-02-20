@@ -11,6 +11,7 @@ type flags struct {
 	outFile     string // output file name
 	outFmt      string // output format
 	nopBuff     uint   // number of nop instructions to include after each instruction
+	quiet       bool   // suppress printing version and status stdout
 	instruction string // instruction to assemble
 }
 
@@ -38,6 +39,7 @@ func parseFlags() flags {
 	flag.StringVar(&f.outFile, "o", "stdout", "Output file to write machine code to.")
 	flag.StringVar(&f.outFmt, "out-fmt", "hex", "Output format (hex, vhdl-byte, vhdl-word, binary, binary-nibble, binary-byte).")
 	flag.UintVar(&f.nopBuff, "nop-buff", 0, "Optional number of nop instructions to include after each instruction.")
+	flag.BoolVar(&f.quiet, "q", false, "Suppress printing version and status to stdout.")
 
 	flag.Parse()
 
